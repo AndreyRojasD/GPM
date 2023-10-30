@@ -1,0 +1,17 @@
+version: '3'
+services:
+  db:
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'GPM'
+      MYSQL_ROOT_PASSWORD: 'password'
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./tables.sql:/docker-entrypoint-initdb.d/seed.sql:ro
+    ports:
+      - 3306:3306
+
+volumes:
+  db_data:
