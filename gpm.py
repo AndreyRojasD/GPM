@@ -16,32 +16,28 @@ def create():
     create_profiles()
 
 @gpm.command()
-@click.argument("id", type=int)
-def delete(id):
+@click.argument("name", type=str)
+def delete(name):
     from Services.DeleteProfiles import DeleteProfiles
-    DeleteProfiles(id)
+    DeleteProfiles(name)
 
 @gpm.command()
-@click.argument("id", type=int)
-def edit(id):
+@click.argument("name", type=str)
+def edit(name):
     from Services.EditProfiles import EditProfiles
-    EditProfiles(id)
+    EditProfiles(name)
 
 @gpm.command()
-@click.argument("id", type=int)
-def use(id):
+@click.argument("name", type=str)
+def use(name):
     from Services.SwitchProfile import Switch_Profile
-    Switch_Profile(id)
+    Switch_Profile(name)
 
 @gpm.command()
 def start():
     from Services.Start import starts
     starts()
 
-@gpm.command()
-def stop():
-    from Services.stop import stop as down
-    down()
 
 
 if __name__ == '__main__':

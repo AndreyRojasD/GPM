@@ -1,10 +1,14 @@
-from Querys import DeleteProfile
-from connector import dbconnector
-def DeleteProfiles(id):
+from . import models
+
+
+def DeleteProfiles(name):
     try:
-        query = DeleteProfile(id)
-        with dbconnector() as db:
-         db.execute(query)
+        profile = models.filter(models.Profile.name == name, models.Profile).first()
+        if not profile:
+            print("Profile not found.")
+            return
+        profile.delete()
+        models.commit()
     except Exception as e:
-        print(f"Failed delete profile, review file Services/DeleteProfiles Error: {str(e)},  Run the 'gpm start' command and wait for a few seconds.")
+        print(f"Failed delete profile, Run the 'gpm start' command.")
 

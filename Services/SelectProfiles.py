@@ -1,15 +1,18 @@
-from RetriveProfiles import retrieve_profiles
-from models.Dbmodels import Profiles
+from . import models
 
-def get_profile(id):
+def get_profile(name):
     try:
-        profiles = retrieve_profiles()
-
-        for profile in profiles:
-            if profile[0] == id:
-                id, user_name, email, pull_rebase, ssh_key_name = profile
-                return Profiles(id, user_name, email, pull_rebase, ssh_key_name)
-            print("ID de perfil no encontrado.")
-
+        profile = models.filter(models.Profile.id == id, models.Profile).first()
+        id = profile.id
+        user_name = profile.user_name
+        email = profile.email
+        pull_rebase = profile.pull_rebase
+        ssh_key_name = profile.ssh_key_name
+        name = profile.name
+        
+        print("{:<10} {:<15} {:<30} {:<13} {:<20}".format(
+                "name", "user_name", "email", "pull_rebase", "ssh_key_name"))
+        print("{:<10} {:<15} {:<30} {:<13} {:<20}".format(
+                    name, user_name, email, pull_rebase, ssh_key_name))
     except Exception as e:
-        print(f"Error al seleccionar el perfil, verifique la ruta Services/SelectProfiles: {e},  Run the 'gpm start' command and wait for a few seconds.")
+        print(f"Failed get profile, Run the 'gpm start' command.")
