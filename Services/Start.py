@@ -1,5 +1,4 @@
-import subprocess
-import os
+from . import models
 
 def starts():
     try:
@@ -26,11 +25,7 @@ G:::::G        G::::G P::::P           M::::::M    M:::::M    M::::::M       R::
                                                                                                                                                                        g::::::ggg:::::::g                                                                                                                                                               gg:::::::::::::g                                                                                                                                                                         ggg::::::ggg                                                                                                                                                                               gggggg    
 """
 
-        script_directory = os.path.dirname(os.path.abspath(__file__))
-        db_directory = os.path.join(script_directory.replace("Services", "db"))
-        print(db_directory)
-        subprocess.run(f'cd {db_directory} && docker-compose up -d', shell=True, check=True, universal_newlines=True)
         print(message)
-        print(f"Pleas execute this commando export PYTHONPATH={script_directory}:$PYTHONPATH")
+        models.create_all()
     except Exception as e:
         print(f"Error starting GPM: {e}")

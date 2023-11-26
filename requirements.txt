@@ -1,3 +1,5 @@
 mysql-connector-python==8.2.0
 protobuf==4.21.12
 python-dotenv==1.0.0
+click==8.1.7
+SQLAlchemy==2.0.23
