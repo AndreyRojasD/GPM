@@ -1,22 +1,24 @@
-from connector import dbconnector
-from Querys import SelectProfiles as SelectProfiles
+from . import models
 
 def retrieve_profiles():
     try:
-        with dbconnector() as db:
-            query = SelectProfiles()
-            db.execute(query)
-            results = db.fetchall()
+        profiles = models.get_all(models.Profile)
 
-            if results:
+        if profiles:
+            print("{:<10} {:<15} {:<30} {:<13} {:<20}".format(
+                "name", "user_name", "email", "pull_rebase", "ssh_key_name"))
+            for profile in profiles:
+                
+                name = profile.name
+                user_name = profile.user_name
+                email = profile.email
+                pull_rebase = profile.pull_rebase
+                ssh_key_name = profile.ssh_key_name                
+                
                 print("{:<10} {:<15} {:<30} {:<13} {:<20}".format(
-                    "id", "user_name", "email", "pull_rebase", "ssh_key_name"))
-                for row in results:
-                    id, user_name, email, pull_rebase, ssh_key_name = row
-                    print("{:<10} {:<15} {:<30} {:<13} {:<20}".format(
-                        id, user_name, email, pull_rebase, ssh_key_name))
-                return results
-            else:
-                print("No profiles found.")
-    except Exception as e:
-        print(f"Failed to retrieve profiles, review file Services/RetrieveProfiles Error: {str(e)},  Run the 'gpm start' command and wait for a few seconds.")
+                    name, user_name, email, pull_rebase, ssh_key_name))
+            return profiles
+        else:
+            print("No profiles found.")
+    except:
+        print(f"Failed to retrieve profiles, Run the 'gpm start' command.")
