@@ -1,14 +1,26 @@
-from Querys import UpdateProfiles
-from connector import dbconnector
-from Inputs import inputs
-from models.Dbmodels import Profiles
-def EditProfiles(id):
+from .Inputs import inputs
+from . import models
+
+def EditProfiles(name):
     try:
-        data  = inputs()
-        profile = Profiles(id , user_name = data.user_name, email = data.email, pull_rebase = data.pull_rebase, ssh_key_name = data.ssh_key_name)
-        query = UpdateProfiles(profile)
-        with dbconnector() as db:
-            db.execute(query)
+        profile = models.filter(models.Profile.name == name, models.Profile).first()
+        if not profile:
+            print("Profile not found.")
+            return
+        print("Press enter to leave the field unchanged.")
+        data = inputs()
+        if data.email != "":
+            profile.email = data.email
+        if data.user_name != "":
+            profile.user_name = data.user_name
+        if data.pull_rebase != "":
+            profile.pull_rebase = data.pull_rebase
+        if data.ssh_key_name != "":
+            profile.ssh_key_name = data.ssh_key_name
+        if data.name != "":
+            profile.name = data.name
+        models.save(profile)
+        
     except Exception as e:
-           print(f"Failed Edit profile, review file Services/EditProfiles Error: {str(e)}, Run the 'gpm start' command and wait for a few seconds.")
+           print(f"Failed Edit profile, Run the 'gpm start' command.")
 

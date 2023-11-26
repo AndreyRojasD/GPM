@@ -1,8 +1,0 @@
-CREATE TABLE profiles (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  user_name VARCHAR(255) NOT NULL,
-  email VARCHAR(255) NOT NULL,
-  pull_rebase BOOLEAN NOT NULL,
-  ssh_key_name VARCHAR(255) NOT NULL
-);
-
